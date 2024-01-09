@@ -9,12 +9,28 @@
 </head>
 <body>
     <div class="container mt-5">
-        <!-- ここにHTMLを書く -->
+        <h2>登録内容の確認</h2>
+        <div id="customer-details">
+            <!-- フォームデータがここに表示されます -->
+        </div>
     </div>
-    <script type="module">
-        <!-- ここにJSを書く -->
-    </script>
     <!-- BootstrapのJavaScriptの読み込み -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const formData = Object.fromEntries(urlParams.entries());
+    
+            const customerDetailsDiv = document.getElementById('customer-details');
+            for (const key in formData) {
+                if (formData.hasOwnProperty(key)) {
+                    const p = document.createElement('p');
+                    p.textContent = `${key}: ${formData[key]}`;
+                    customerDetailsDiv.appendChild(p);
+                }
+            }
+        });
+    </script>
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
