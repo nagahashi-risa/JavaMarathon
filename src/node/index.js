@@ -47,4 +47,15 @@ app.post("/add-customer", async (req, res) => {
   }
 });
 
+app.get("/customers/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const customerData = await pool.query("SELECT * FROM customers WHERE customer_id = $1", [customerId]);
+    res.json(customerData.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(404).json({ error: "Customer not found" });
+  }
+});
+
 app.use(express.static("public"));

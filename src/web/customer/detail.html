@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Detail</title>
+    <!-- Bootstrap CSSの読み込み -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">Customer Detail</h1>
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Company Name</th>
+            <th scope="col">Industry</th>
+            <th scope="col">Contact</th>
+            <th scope="col">Location</th>
+            <th scope="col">Created Date</th>
+            <th scope="col">Updated Date</th>
+          </tr>
+        </thead>
+        <tbody id="customer-details">
+          <!-- 顧客データはここに挿入されます -->
+        </tbody>
+      </table>
+    </div>
+    <script type="module">
+        import config from "../config.js";
+      
+        // URLからIDを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get('customerId');
+
+        fetch(`${config.apiUrl}/customers/${customerId}`)
+          .then((response) => response.json())
+          .then((customer) => {
+            const detailTable = document.getElementById("customer-details");
+            const row = detailTable.insertRow();
+            
+            const keys = ["customer_id", "company_name", "industry", "contact", "location", "created_date", "updated_date"];
+            console.log(keys);
+            keys.forEach((key) => {
+              const cell = row.insertCell();
+              cell.textContent = customer[key];
+            });
+          })
+          .catch((error) => console.error(error));
+      </script>
+      
+    <!-- BootstrapのJavaScriptと依存関係のリンク -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

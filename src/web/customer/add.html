@@ -57,56 +57,6 @@
             .catch(error => console.error('Error:', error));
         });
     </script>
-    
-    <!-- <script type="module">
-        //config.jsファイルから設定をインポートしている
-        import config from '../config.js';
-
-        //フォーム(idがcustomer-form)の送信イベントが発生した時に、以下の関数が実行されるようにイベントリスナーが追加されている
-        document.getElementById('customer-form').addEventListener('submit', function(e) {
-            //デフォルトのフォーム送信動作をキャンセルしている。つまり通常のページの遷移やリロードを防いでいる。
-            e.preventDefault();
-            //フォームに入力されたデータを取得し、FormDataオブジェクトとして保存している
-            const formData = new FormData(this);
-            //fetch関数を使ってAPIエンドポイントに対してPOSTリクエストを送信しようとしている。このURLはconfigオブジェクトから取得される。
-            //fetch()メソッドは指定されたリソースに対してリクエストを行う。
-            //ここでは、config.apiURLに格納されているベースのAPIURLに"/add-customer"を追加して、新しいリソースにリクエストを送信している。
-            fetch(config.apiUrl + '/add-customer', {
-                //リクエストのHTTPメソッドをPOST(データの送信)に設定している
-                method: 'POST',
-                //リクエストヘッダーに送信するデータの形式を指定。ここではx-www-form-urlencoded形式を使っています。
-                //(データがURLエンコードされていることを示す)
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                //実際に送信されるデータの本体を指す
-                //FormDataはフォームに入力されたで０たを収集したFormDataオブジェクト
-                //このFormDataオブジェクトをURLSearchParamsに変換している
-                //fetchメソッドが受け入れるデータ形式に合わせるための処理。通常、フォームデータはこの形式に変換されて送信
-                body: new URLSearchParams([...formData]),
-                //レスポンスをJSON形式に変換しています。
-            })
-            .then(response => response.json())
-            //レスポンスのデータを解析し、成功または失敗に応じてアラートを表示したりフォームをリセットしたりしている
-              .then(data => {
-                console.log(data);
-                if(data.success) {
-                    alert('顧客情報が正常に保存されました。');
-                    // フォームをリセット
-                    document.getElementById('customer-form').reset();
-                } else {
-                    alert('保存に失敗しました。');
-                }
-              })
-              //リクエストが失敗した場合にエラーメッセージをコンソールに出力
-              .catch(error => console.error('Error:', error));
-              
-              // URLSearchParamsを使ってフォームデータをURLパラメータに変換
-              const searchParams = new URLSearchParams(formData).toString();
-              // リダイレクト先のURLにフォームデータをクエリパラメータとして渡す
-              window.location.href = `add-comfirm.html?${searchParams}`;
-        });
-    </script> -->
     <!-- BootstrapのJavaScriptの読み込み -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

@@ -42,11 +42,15 @@
             const cell2 = row.insertCell(1);
             const cell3 = row.insertCell(2);
             cell1.textContent = index + 1;
-            cell2.textContent = customer.company_name;
+            cell2.innerHTML = `<a href="detail.html?customerId=${customer.customer_id}" onclick="showCustomerDetail(${customer.customer_id})">${customer.company_name}</a>`;
             cell3.textContent = customer.contact;
           });
         })
         .catch((error) => console.error(error));
+
+        function showCustomerDetail(customerId) {
+          window.location.href = `customer/detail.html?customerId=${customerId}`;
+        }
     </script>
 
     <!-- BootstrapのJavaScriptと依存関係のリンク -->
