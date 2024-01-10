@@ -26,10 +26,42 @@
           <!-- 顧客データはここに挿入されます -->
         </tbody>
       </table>
+      <div class="container mt-5">
+        <!-- ... (既存のコード) ... -->
+        <button id="deleteBtn" class="btn btn-danger">削除</button>
+        <button id="editBtn" class="btn btn-primary">編集画面へ</button>
+      </div>
     </div>
     <script type="module">
         import config from "../config.js";
-      
+            // URLからIDを取得
+        const deleteUrlParams = new URLSearchParams(window.location.search);
+        const deleteCustomerId = deleteUrlParams.get('customerId');
+
+        const deleteButton = document.getElementById("deleteBtn");
+        deleteButton.addEventListener("click", () => {
+        const confirmation = confirm("削除していいですか？");
+        if (confirmation) {
+            fetch(`${config.apiUrl}/customers/${deleteCustomerId}`, {
+            method: 'DELETE',
+            })
+            .then(() => {
+            alert("顧客が削除されました");
+            window.location.href = 'list.html'; // list.htmlにリダイレクト
+            })
+            .catch((error) => console.error(error));
+        } else {
+            alert("削除をキャンセルしました");
+        }
+        });
+        
+        // 編集するボタンのクリックイベント
+        const editButton = document.getElementById("editBtn");
+        editButton.addEventListener("click", () => {
+            // 編集画面に遷移
+            window.location.href = `update.html?customerId=${deleteCustomerId}`;
+        });
+        
         // URLからIDを取得
         const urlParams = new URLSearchParams(window.location.search);
         const customerId = urlParams.get('customerId');

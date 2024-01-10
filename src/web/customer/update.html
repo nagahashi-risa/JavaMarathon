@@ -9,11 +9,56 @@
 </head>
 <body>
     <div class="container mt-5">
-        <!-- ここにHTMLを書く -->
+        <h1 class="mb-4">Customer Update</h1>
+        <form id="updateForm">
+            <div class="form-group">
+                <label for="companyName">Company Name</label>
+                <input type="text" class="form-control" id="companyName" name="companyName">
+            </div>
+            <div class="form-group">
+                <label for="industry">Industry</label>
+                <input type="text" class="form-control" id="industry" name="industry">
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact</label>
+                <input type="text" class="form-control" id="contact" name="contact">
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location" name="location">
+            </div>
+            <button type="submit" class="btn btn-primary">確定</button>
+        </form>
     </div>
     <script type="module">
-        <!-- ここにJSを書く -->
-    </script>
+        import config from "../config.js";
+    
+        // URLからIDを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const customerId = urlParams.get('customerId');
+    
+        const updateForm = document.getElementById("updateForm");
+        updateForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const formData = new FormData(updateForm);
+            const updateData = {};
+            formData.forEach((value, key) => {
+                updateData[key] = value;
+            });
+            fetch(`${config.apiUrl}/customers/${customerId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updateData),
+            })
+            .then(() => {
+                // データが更新されたら詳細ページにリダイレクト
+                window.location.href = `detail.html?customerId=${customerId}`;
+            })
+            .catch((error) => console.error(error));
+        });
+    </script>    
     <!-- BootstrapのJavaScriptの読み込み -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

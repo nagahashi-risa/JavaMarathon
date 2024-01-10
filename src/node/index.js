@@ -47,6 +47,7 @@ app.post("/add-customer", async (req, res) => {
   }
 });
 
+//顧客詳細情報の表示
 app.get("/customers/:id", async (req, res) => {
   try {
     const customerId = req.params.id;
@@ -55,6 +56,34 @@ app.get("/customers/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(404).json({ error: "Customer not found" });
+  }
+});
+
+//顧客情報の削除
+app.delete("/customers/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    await pool.query("DELETE FROM customers WHERE customer_id = $1", [customerId]);
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false });
+  }
+});
+
+//顧客情報の更新
+app.put("/customers/:id", async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    const { companyName, industry, contact, location } = req.body;
+    const updateCustomer = await pool.query(
+      "UPDATE customers SET company_name = $1, industry = $2, contact = $3, location = $4, updated_date = NOW() WHERE customer_id = $5 RETURNING *",
+      [companyName, industry, contact, location, customerId]
+    );
+    res.json({ success: true, customer: updateCustomer.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.json({ success: false });
   }
 });
 
