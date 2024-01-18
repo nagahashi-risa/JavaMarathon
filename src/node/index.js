@@ -50,7 +50,7 @@ app.post("/add-customer", async (req, res) => {
 //顧客詳細情報の表示
 app.get("/customers/:id", async (req, res) => {
   try {
-    const customerId = req.params.id;
+    const customerId = req.params.id; //リクエストから顧客IDを取得
     const customerData = await pool.query("SELECT * FROM customers WHERE customer_id = $1", [customerId]);
     res.json(customerData.rows[0]);
   } catch (err) {
